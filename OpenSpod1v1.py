@@ -9,27 +9,29 @@ import math
 
 #ESP stuff
 import urllib.request
-
+#TASK1
 with urllib.request.urlopen('http://144.167.214.188') as response:
     data = response.read()
 
 #webUrl = urllib.request.urlopen('http://144.167.212.266')
-
+#TASK 2 convert data from class "bytes" to class "string"
 #print(data)
 data=data.rstrip()
 # print(data)
 # print(type(data))
+
+#TASK3  remove final quote 
 data1=str(data)
 data1=data1.rstrip("'")
 # print(data1)
 # print(type(data1))
-
+#TASK4 function that converts string to a list
 def Convert(string):
     li = list(string.split(","))
     return li
 
 #the angles will need to be variables in stacked pods that align with cardinal coordinates"
-
+#Task5 is a function that inputs three sensor signals and output x,y,r,angle in degrees, angle in radians and ave sensor value
 def config_vect(A_read,B_read,C_read):
     '''this function inputs three sensor signals at the vertices of a triangle and returns values of the x axis,
 y axis, hypotenous and the angle in radians and degrees and average '''
@@ -49,7 +51,7 @@ y axis, hypotenous and the angle in radians and degrees and average '''
 data3 = Convert(data1)
 print(data3)
 # print(type(data3))
-
+#TASK 6 assign raw data from list to variables using list indexes
 #Pulling Data from SPOD 
 MAC_A = data3[0]
 ESP_ID = data3[1]
@@ -65,7 +67,7 @@ T_C = data3[10]
 RH_C = data3[11]
 P_C = data3[12]
 VOC_C = data3[13]
- 
+ #TASK7 - convert data to float and then input to configuration vector function
 #the data in the list are strings and we need to convert to float in order to do math 
 #print(type(VOC_A))
 n_VOC_A=float(VOC_A)
@@ -128,6 +130,7 @@ RH_deg=output[4]
 RH_ave=output[5]
 print(f"RH_x={RH_x} of class{type(RH_x)} and RH_y={RH_y} and RH_r={RH_r}")
  
+ #TASK8 upload data to Google Sheet through API
 #Access Google API
 googleAPI = '/home/pi/Programs/0_crontab/API_proj_1_key.json'
 scope = ['https://www.googleapis.com/auth/drive']
@@ -148,6 +151,7 @@ values =[time, MAC_A, ESP_ID, n_VOC_A, n_VOC_B, n_VOC_C, VOC_ave, VOC_x, VOC_y, 
 worksheet.insert_row(values, 2, value_input_option='USER_ENTERED')
 print("Google Sheet Updated")
 # the following code makes backup file
+#TASK 9 dump data to local back file (csv)
 #note how we removed brackets from the list when we converted to strings
 Spod1Backup = open("openspod1backup.csv","a")
 #Spod1Backup.write("\n")
